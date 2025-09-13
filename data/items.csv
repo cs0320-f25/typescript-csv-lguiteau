@@ -1,0 +1,5 @@
+name,price,quantity,inStock
+Yogurt,2,15,true
+Laptop,450,200,true
+Mirror,32,0,false
+Perfume,75,0,false
