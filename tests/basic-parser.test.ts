@@ -7,7 +7,7 @@ const ITEM_CSV_PATH = path.join(__dirname, "../data/items.csv");
 const TRANSCRIPT_CSV_PATH = path.join(__dirname, "../data/transcript.csv");
 
 test("parseCSV yields arrays", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH)
+  const results = await parseCSV(PEOPLE_CSV_PATH) as string[][];
   
   expect(results).toHaveLength(5);
   expect(results[0]).toEqual(["name", "age"]);
@@ -93,6 +93,7 @@ test("parseCSV spaces around commas", async () =>{
 //TESTING MY SCHEMAS HERE:
 
 test("parseCSV myFirstSchema", async () => {
+  const PEOPLE_CSV_PATH = path.join(__dirname,"../data/people.csv");
   const results = await parseCSV(PEOPLE_CSV_PATH, myFirstSchema);
   expect(results).toEqual([
     {name:"Alice",age:23},
@@ -109,6 +110,10 @@ test("parseCSV transcriptSchema third row invalid", async()=>{
     //RACHEL'S ROW IS INVALID BECAUSE HER GPA IS 5.0 WHICH IS GRATER THAN THE MAX OF 4.0, SO HER ROW IS SKIPPED
     {studentName: "Drue", studentId: 24680, GPA: 1.2, onTrack: false},
   ]);
+
+  expect(results.errors[0]).toMatch("Row 3");
+  expect(results.errors[0]).toMatch("Validation error");
+
 });
 
 test("parseCSV itemSchema", async()=>{

@@ -61,15 +61,20 @@
             My intial ideas were edge cases/enhancements such as: Empty lines/empty files, white space/blank space, multiple commas/special characters, and different types of delimiters; the LLM suggested numerous other edge cases an enhancements such as: empty lines, Missing values, inconsistent row length, embedded quotes, and malformed lines. For my first prompt change, I included that the CSV parser accepts a filename as input and converts rows into strings that recognizes and ignores missing values and/or inconsistent row lengths, to which the LLM suggested that I watch out for delimiters, header row support, and cosistent type coercion. On my second prompt change, I included that, similar to the first prompt change, the parser accepts a filename as input and converts rows into strings that recognizes and ignores missing values and/or inconsistent row lengths as well as recognizes embedded quotes, malformed lines, and empty lines. In response to this the LLM still suggested custom delimiters and header row support, but also introduces data type inference/schema support, quoted fields with line breaks, and row number tracking. Out of all of the suggestions, header row support, empty lines, and recognizing embedded quotes stuck with me the most because their necessity was more apparent, whereas the others seemed to be more optional. 
 
 ### Design Choices
+- I have included various comments that explain my thinking/the logic behind some of the decisions I made while editing the parser.
+- I decided to include error messages that describe the row the error is found on.
+- I made several different CSVs for my various test cases for both Task A and for Task C in order to test different functionalities of my schemas
+
 
 ### 1340 Supplement
 
 - #### 1. Correctness
-
+I think that several things can make a CSV parser “correct”. Starting off, properly handling delimiters, meaning that the parser correctly splits on a comma (or whatever is specified for that particular CSV), preserving the order of the fields, consistent row structure, maintains all original character used in the input, and is able to handle malformed rows/input. 
 - #### 2. Random, On-Demand Generation
-
+If I had a function  that was able to produce random, on-demand CSVs, I would be able to test my parser against a large range of data and catch very small bugs. Therefore, this would be very helpful in finding edge cases, ensuring consistency, improving the range of possible input formats, and ensuring that my parser is robust enough. 
 - #### 3. Overall experience, Bugs encountered and resolved
-#### Errors/Bugs:
+This sprint differed from previous assignments I have done in the sense that I felt as though it was pretty vague, which left a lot of the implementation and design choices up to me. I was surprised by how much I relied on the lecture notes and the handout to uncover how to solve some of the issues present in my code. I did encounter some bugs, and unfortunately I did not have the ability to fully fix them. One of the main bugs I encountered was with my error messaging; in order to alert the user of the error without using the console (as they might not be able to see it), I decided to implement error messaging. This error message was supposed to detail the row in which the error occurred, but continue moving forward rather than completely failing the entire test, but it has started to completely fail the tests instead. 
+#### Errors/Bugs: I'm having some bugs with the error messaging. Initially, my tests passed, but once I implemented the error messaging, some of the tests started failing instead of simply indiciating which line the error can be found and proceeding. 
 #### Tests:
 #### How To…
 
