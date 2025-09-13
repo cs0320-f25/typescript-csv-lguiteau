@@ -77,8 +77,12 @@ This sprint differed from previous assignments I have done in the sense that I f
 . 
 #### Errors/Bugs: I'm having some bugs with the error messaging. 
 Initially, my tests passed, but once I implemented the error messaging, some of the tests started failing (empty file) and (white space), and I cannot seem to understand why. 
-#### Tests:
-#### How To…
+#### Tests: 
+For both Task A and C, I created various tests that delve further itno some potential room for improvement such as, empty files, empty cells,
+extra commas, spaces around the commas, and white space. These helped me when editing the parser and creating my schemas, and most of them currently pass (I explain more about the ones that don't pass below). 
+#### How To… 
+The tests I wrote have corresponding schemas that are already included, so the the tests can be run as such. However, they are also CSV
+specific, so they can only be run with their corresponding CSV linked. 
 
 #### Team members and contributions (include cs logins): 
 I didn't have any team members.
@@ -88,3 +92,4 @@ I used Copilot only on the portions of the project that it was allowed (not Task
 #### Total estimated time it took to complete project: 
 14 hours
 #### Link to GitHub Repo:  
+https://github.com/cs0320-f25/typescript-csv-lguiteau.git
