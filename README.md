@@ -73,13 +73,18 @@ I think that several things can make a CSV parser “correct”. Starting off, p
 - #### 2. Random, On-Demand Generation
 If I had a function  that was able to produce random, on-demand CSVs, I would be able to test my parser against a large range of data and catch very small bugs. Therefore, this would be very helpful in finding edge cases, ensuring consistency, improving the range of possible input formats, and ensuring that my parser is robust enough. 
 - #### 3. Overall experience, Bugs encountered and resolved
-This sprint differed from previous assignments I have done in the sense that I felt as though it was pretty vague, which left a lot of the implementation and design choices up to me. I was surprised by how much I relied on the lecture notes and the handout to uncover how to solve some of the issues present in my code. I did encounter some bugs, and unfortunately I did not have the ability to fully fix them. One of the main bugs I encountered was with my error messaging; in order to alert the user of the error without using the console (as they might not be able to see it), I decided to implement error messaging. This error message was supposed to detail the row in which the error occurred, but continue moving forward rather than completely failing the entire test, but it has started to completely fail the tests instead. 
-#### Errors/Bugs: I'm having some bugs with the error messaging. Initially, my tests passed, but once I implemented the error messaging, some of the tests started failing instead of simply indiciating which line the error can be found and proceeding. 
+This sprint differed from previous assignments I have done in the sense that I felt as though it was pretty vague, which left a lot of the implementation and design choices up to me. I was surprised by how much I relied on the lecture notes and the handout to uncover how to solve some of the issues present in my code. I did encounter some bugs, and unfortunately I did not have the ability to fully fix them. One of the main bugs I encountered was with my error messaging; I'm pretty sure that my error code logic is performing correctly, but i'm not entirely sure if the user is able to "see" it or if I'm enountering the same issue the just logging the error to the console brings forth. Also, two of tests (initially made for TASK A) are not passing, and I cannot seem to figure out the reason as to why. 
+. 
+#### Errors/Bugs: I'm having some bugs with the error messaging. 
+Initially, my tests passed, but once I implemented the error messaging, some of the tests started failing (empty file) and (white space), and I cannot seem to understand why. 
 #### Tests:
 #### How To…
 
-#### Team members and contributions (include cs logins):
+#### Team members and contributions (include cs logins): 
+I didn't have any team members.
 
 #### Collaborators (cslogins of anyone you worked with on this project and/or generative AI):
-#### Total estimated time it took to complete project:
+I used Copilot only on the portions of the project that it was allowed (not Task C), and copilot helped with the first few tests I created before I disabled the feature for it to automatically fill in my code before I type it. (I'm not sure if I should go into more detail or exactly how to show my copilot history, but I can show my mentor my log if needed).
+#### Total estimated time it took to complete project: 
+14 hours
 #### Link to GitHub Repo:  

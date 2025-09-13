@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { parse } from "path";
 import * as readline from "readline";
 import { z, ZodType, ZodSafeParseResult, ZodError} from "zod";
 
@@ -16,6 +17,10 @@ import { z, ZodType, ZodSafeParseResult, ZodError} from "zod";
  * @param path The path to the file being loaded.
  * @returns a "promise" to produce a 2-d array of cell values
  */
+
+export const parsedErrors: string[] = [] //made a global variable so that I don't have to change the return type of the parseCSV function
+
+
 export async function parseCSV<T>(path: string, schema?: ZodType<T>): Promise<string[][] | T[] > {
   // This initial block of code reads from a file in Node.js. The "rl"
   // value can be iterated over in a "for" loop. 
@@ -29,9 +34,10 @@ export async function parseCSV<T>(path: string, schema?: ZodType<T>): Promise<st
   
   const ogRows: string[][] = []; // (for no schema) initializing an empty array of arrays that hold the original rows (an arrary of string arrays) 
   const parsedRows: T[] = []; // (for schema) initializing an empty array to store the parsed rows/objects
-  const errors: string[] = [];
+  // const errors: string[] = [];
   let headers: string [] | null = null; //initializing headers as an array of strings or null 
 
+  parsedErrors.length = 0; //clearing the parsedErrors array before each run
   
   // We add the "await" here because file I/O is asynchronous. 
   // We need to force TypeScript to _wait_ for a row before moving on. 
@@ -70,7 +76,7 @@ export async function parseCSV<T>(path: string, schema?: ZodType<T>): Promise<st
             rowInfo += key + ":" + newObject[key] + ", ";
           }
       let errorMessage = results.error.issues.map(issue => issue.message).join(",");
-      errors.push("Validation error(s) in row {" + rowInfo + "} : " + errorMessage);   
+      parsedErrors.push("Validation error(s) in row {" + rowInfo + "} : " + errorMessage);   
 
     }     
   }

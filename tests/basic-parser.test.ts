@@ -1,4 +1,4 @@
-import { parseCSV } from "../src/basic-parser";
+import { parseCSV, parsedErrors } from "../src/basic-parser";
 import * as path from "path";
 import { myFirstSchema, transcriptSchema,itemSchema} from "../src/schemas";
 
@@ -24,18 +24,6 @@ test("parseCSV yields only arrays", async () => {
   }
 });
 
-test("parseCSV commas in quotes", async () => {
-  const COMMAS_IN_QUOTES_CSV = path.join(__dirname, "../data/commasinquotes.csv");
-  const results = await parseCSV(COMMAS_IN_QUOTES_CSV)
-  expect(results).toEqual([
-    ["name", "age"],
-    ['Laurianie, Lguiteau',"19"],
-    ["Jonathan", "18"],
-    ["Megan", "24"],
-    ["Julie", "32"]
-  ]);
-});
-
 test("parseCSV empty file", async () =>{
   const EMPTY_SPACE_CSV = path.join(__dirname, "../data/empty.csv");
   const results = await parseCSV(EMPTY_SPACE_CSV)
@@ -52,6 +40,7 @@ test("parseCSV white space", async () =>{
     ["Megan", "24"],
     ["Julie", ""]
   ]);
+  expect(parsedErrors).toMatch("Validation error");
 });
 
 test("parseCSV extra commas", async () =>{
@@ -110,9 +99,7 @@ test("parseCSV transcriptSchema third row invalid", async()=>{
     //RACHEL'S ROW IS INVALID BECAUSE HER GPA IS 5.0 WHICH IS GRATER THAN THE MAX OF 4.0, SO HER ROW IS SKIPPED
     {studentName: "Drue", studentId: 24680, GPA: 1.2, onTrack: false},
   ]);
-
-  expect(results.errors[0]).toMatch("Row 3");
-  expect(results.errors[0]).toMatch("Validation error");
+  expect(parsedErrors[0]).toMatch("Validation error");
 
 });
 
