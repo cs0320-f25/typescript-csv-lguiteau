@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as readline from "readline";
-import { z, ZodType, ZodSafeParseResult} from "zod";
+import { z, ZodType, ZodSafeParseResult, ZodError} from "zod";
 
 
 /**
@@ -48,19 +48,22 @@ export async function parseCSV<T>(path: string, schema?: ZodType<T>): Promise<st
 
     if(schema == undefined){
       ogRows.push(values); //if there is no schema, push the values to the original rows array
-    } else { //if there is a schema, parse the values into objects and put into the parsedRows array using the headers
-      const newObject: {[key: string]: string} = {}; //creating a newobject that with hold the key-value pairs for each header and its subsequent value
-      headers.forEach((header, i)=>{
+    } 
+    else { //if there is a schema, parse the values into objects and put into the parsedRows array using the headers
+      const newObject: {[key: string]: unknown} = {}; //creating a newobject that with hold the key-value pairs for each header and its subsequent value
+      headers.forEach((header, i) =>{
         newObject[header] = values[i]|| ""; //assigning each header to its corresponding value, if there is no value assign it to an empty string
       });
 
-    const results: ZodSafeParseResult<T> = schema.safeParse(newObject); //this parses the newObject using the schema and returns a ZodSafeParseResult object
+      const results: ZodSafeParseResult<T> = schema.safeParse(newObject); //this parses the newObject using the schema and returns a ZodSafeParseResult object
 
     if (results.success){ //if the parsing was successful, push the parsed object to the parsedRows array}
       parsedRows.push(results.data);
-    } 
+    }
+    
 }
 }
-return schema ? parsedRows: ogRows;
+if (!schema){return ogRows;}
+return parsedRows;
   
 }
